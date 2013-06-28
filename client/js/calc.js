@@ -19,7 +19,7 @@
 
 		function formatAnswer(answer, displayLength) {
 			if (String(answer).length > displayLength) {
-				return Number(answer).toPrecision(displayLength - 4);
+				return Number(answer).toPrecision(displayLength - 4); 
 			} else {
 				return answer;
 			}
@@ -28,25 +28,19 @@
 		// public API
 		return {
 			createCalculator: function (location, digits) {
-				var displayLength = digits || 10;
+				var $display = null;
 				var rhs = 0;	
 				var operator = null;
 				var display = '0';
 				var hasDecimal = false;
 				var answer = 0;
 				
-				var $location = null;
-				var $display = null;
-				var $keypad = null;
 				
-				(function uiBuilder(location) {
-					$location = $(location);
-					$location.html(
-						'<h1 id="new"><span class="logo"><i>Shurakai</i><b>Soft</b></span></h1>' +
-						'<h2>SV104 CALCULATOR</h2>'
-					);
+				(function uiBuilder() {
+					var $location = null;
+					var $keypad = null;
+					
 					$display = $('<div class="calc-display"></div>');
-					$location.append($display);
 					$keypad = $(
 						'<div class="calc-keypad">' +
 							'<button value="b" class="warningButton back" >&laquo;</button>' +
@@ -69,13 +63,59 @@
 							'<button value="=" class="doubleButton">=</button>' +
 						'</div>'
 					);
+					$keypad.delegate('button', 'click', function (event) {
+						var keyPressed = $(this).attr('value');
+						switch (keyPressed) {
+						case '0':
+						case '1':
+						case '2':
+						case '3':
+						case '4':
+						case '5':
+						case '6':
+						case '7':
+						case '8':
+						case '9':
+						case '.':
+							doDigit(keyPressed);
+							break;
+						case '+':
+						case '-':
+						case '*':
+						case '/':
+							doOperator(keyPressed);
+							break;
+						case '=':
+							doCalc();
+							break;
+						case 'c':
+							reset();
+							break;
+						case 'b':
+							location.href = 'home.html';
+							break;
+						default:
+							alert("Detected Unknown Key: " + keyPressed);
+							break;
+						}
+						event.stopPropagation();
+					});
+
+					$location = $(location);
+					$location.html(
+						'<h1 id="new"><span class="logo"><i>Shurakai</i><b>Soft</b></span></h1>' +
+						'<h2>SV104 CALCULATOR</h2>'
+					);
+					$location.append($display);
 					$location.append($keypad);
-					
+
 					
 					$display.update = function (value) {
 						this.html(value);
 					};
-				})(location);
+					$display.displayLength = digits || 10;
+					
+				})();
 				
 				function debug(message) {
 					$display.update(message);
@@ -108,13 +148,13 @@
 					default:
 						result = "Invalid Op";
 					}
-					display = trimTrailingZeros(formatAnswer(result, displayLength));
+					display = trimTrailingZeros(formatAnswer(result, $display.displayLength));
 					$display.update(display);
 					answer = true;
 				};
 				
 				function concatDigit(digit) {
-					if (display.length < displayLength) {
+					if (display.length < $display.displayLength) {
 						display += digit;
 					}
 				};
@@ -165,43 +205,6 @@
 					resetDisplay();
 				}
 				
-				$keypad.delegate('button', 'click', function (event) {
-					var keyPressed = $(this).attr('value');
-					switch (keyPressed) {
-					case '0':
-					case '1':
-					case '2':
-					case '3':
-					case '4':
-					case '5':
-					case '6':
-					case '7':
-					case '8':
-					case '9':
-					case '.':
-						doDigit(keyPressed);
-						break;
-					case '+':
-					case '-':
-					case '*':
-					case '/':
-						doOperator(keyPressed);
-						break;
-					case '=':
-						doCalc();
-						break;
-					case 'c':
-						reset();
-						break;
-					case 'b':
-						location.href = 'home.html';
-						break;
-					default:
-						alert("Detected Unknown Key: " + keyPressed);
-						break;
-					}
-					event.stopPropagation();
-				});
 				
 				reset();
 			}
