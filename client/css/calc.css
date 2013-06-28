@@ -54,7 +54,7 @@ h2 {
 	margin:0 .7em .5em;
 }
 
-#display {
+.calc-display {
 	clear:both;
  	background: rgb(245,246,246); /* Old browsers */
  	background: -moz-linear-gradient(-45deg,  rgba(245,246,246,1) 0%, rgba(184,186,198,1) 15%, rgba(219,220,226,1) 37%, rgba(221,223,227,1) 89%, rgba(245,246,246,.5) 100%); /* FF3.6+ */
@@ -81,7 +81,7 @@ h2 {
 	
 }
 
-#keypad {
+.calc-keypad {
 	background-color:rgba(0,0,0,0);
 	width:100.4464285714286%;
 	height:65.11627906976744%;
@@ -90,7 +90,7 @@ h2 {
 	border:none;
 }
 
-#keypad button {
+.calc-keypad button {
 	font-size:1.5em;
 	font-weight:900;
 	line-height:1.5em;
@@ -117,17 +117,17 @@ h2 {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313',GradientType=0 ); /* IE6-9 */
 }
 
-#keypad button:active {
+.calc-keypad button:active {
 	color:white;
 	text-shadow: 0px .0625em .1875em rgba(1,0,251,.85);
 	box-shadow: 0px 0px .625em #0100FB;
 }
 
-#keypad .doubleButton {
+.calc-keypad .doubleButton {
 	width: 47.32142857142857%;
 }
 
-#keypad .warningButton {
+.calc-keypad .warningButton {
 	background: rgb(252,234,187); /* Old browsers */
 	background: -moz-linear-gradient(top,  rgba(252,234,187,1) 0%, rgba(248,181,0,1) 15%, rgba(252,205,77,1) 81%, rgba(251,223,147,1) 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,234,187,1)), color-stop(15%,rgba(248,181,0,1)), color-stop(81%,rgba(252,205,77,1)), color-stop(100%,rgba(251,223,147,1))); /* Chrome,Safari4+ */
