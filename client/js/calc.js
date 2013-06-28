@@ -211,3 +211,37 @@
 		};
 	})();
 })();
+
+$(function () {
+	
+	window.CALC.createCalculator("#calc", 10);
+	
+	(function respectAspectRatio(id, width, height) {
+		$(id).wrap('<div id="content" />');
+		var content = $('#content');
+		content.wrap('<div id="positioningHelper" style="top:50%; left:50%; position:absolute;"/>');
+		var positioningHelper = $('#positioningHelper');
+		
+		function resizeToRatio() {
+			var ratio = width / height;
+			var newWidth = $(window).width();
+			var newHeight = $(window).height();
+			if ((newWidth / newHeight) > ratio) {
+				newWidth = newHeight * ratio;
+			} else {
+				newHeight = newWidth / ratio;
+			}
+			positioningHelper.width(newWidth).height(newHeight).css({
+				'margin-top': (-newHeight / 2) + 'px',
+				'margin-left': (-newWidth / 2) + 'px',
+				'font-size': (newWidth / width) + 'em'});
+			content.width(newWidth).height(newHeight);
+		}
+		
+		$(window).resize(resizeToRatio);
+		$(window).on('orientationchange', resizeToRatio);
+		resizeToRatio();
+	})('#calc', 240, 360);
+});
+
+

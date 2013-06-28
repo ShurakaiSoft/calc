@@ -1,3 +1,7 @@
-test("hello world test", function () {
-	ok(1 == '1', "Passed!");
+test("CALC exists", function () {
+	ok(typeof CALC == 'object', "Passed!");
+});
+
+test("CALC contains a function createCalculator", function () {
+	ok(typeof CALC.createCalculator == 'function');
 });
